@@ -1,0 +1,17 @@
+{
+    "manifest_version":3,
+    "name":"Ejemplo Ext",
+    "short_name":"Ej.Ext.",
+    "description":"aqui va la descripcion",
+    "version":"1.0",
+    "action":{
+        "default_popup":"inici.html",
+        "default_icon":"img/icon.png"
+    },
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "scripting"
+    ]
+
+}
