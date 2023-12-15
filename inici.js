@@ -109,36 +109,73 @@ function exec_changeState_passwords() {
 }
 
 //AMAZON
+let sticky_menu = document.createElement("div");
+sticky_menu.style.width = "200px";
+sticky_menu.style.height = "200px";
+sticky_menu.style.position = 'fixed';
+sticky_menu.style.top = '50%';
+sticky_menu.style.right = '10px';
+sticky_menu.style.backgroundColor = 'red';
+let button_images = document.createElement("button");
+button_images.textContent = "Show text images";
+button_images.id = "button_images_text";
+button_images.addEventListener("click",()=>{
+    
+    click_imagesText();
+
+});
+
+let button_prices = document.createElement("button");
+button_prices.textContent = "Search lowest price";
+button_prices.id = "button_lowest prices";
+sticky_menu.appendChild(button_images)
+sticky_menu.appendChild(button_prices)
+console.log(sticky_menu)
+function exec_showStickyMenu(sticky_menu){
+    console.log(sticky_menu)
+    document.body.appendChild(sticky_menu);
+}
 
 document.getElementById("btn_sticky_menu").addEventListener("click",()=>{
     
-    click_showStickyMenu();
+    click_showStickyMenu(sticky_menu);
 });
 
 //show menu
 function click_showStickyMenu() {
-    
+    console.log("AA")
     chrome.scripting.executeScript({
         target:{"tabId":tabId},
         func:exec_showStickyMenu,
-        args:[]
+        args:[sticky_menu]
     });
 }
 
-function exec_showStickyMenu(){
-    let sticky_menu = document.createElement("div");
-    sticky_menu.style.width = "200px";
-    sticky_menu.style.height = "200px";
-    sticky_menu.style.position = 'fixed';
-    sticky_menu.style.top = '50%';
-    sticky_menu.style.right = '10px';
-    sticky_menu.style.backgroundColor = 'red';
-    let button_images = document.createElement("button");
-    button_images.textContent = "Show text images";
-    let button_prices = document.createElement("button");
-    button_prices.textContent = "Search lowest price";
-    sticky_menu.appendChild(button_images)
-    sticky_menu.appendChild(button_prices)
-    document.body.appendChild(sticky_menu);
+
+
+//show text images
+function click_imagesText() {
+    
+    chrome.scripting.executeScript({
+        target:{"tabId":tabId},
+        func:exec_imagesText,
+        args:[]
+    });
+
 }
 
+    document.getElementById("button_images_text")
+
+
+function exec_imagesText() {
+    let images = document.getElementsByTagName("img");
+
+    let imagesArray = Array.from(images);
+
+    for (let i = 0; i < imagesArray.length; i++) {
+        imagesArray[i].addEventListener("mouseover", function(){
+            console.log(imagesArray[i].getAttribute("alt"));
+        });
+    }
+
+}
