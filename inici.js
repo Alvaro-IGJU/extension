@@ -134,32 +134,35 @@ function exec_stickyMenu() {
     sticky_menu.style.top = '50%';
     sticky_menu.style.right = '10px';
     sticky_menu.style.backgroundColor = 'red';
+
     let button_images = document.createElement("button");
     button_images.textContent = "Show text images";
-    button_images.id = "button_images_text";
-    button_images.addEventListener("click",()=>{
+    button_images.addEventListener("click", () => {
         let images = document.getElementsByTagName("img");
         let imagesArray = Array.from(images);
-    
-        for (let i = 0; i < imagesArray.length; i++) {
-            imagesArray[i].addEventListener("mouseover",(e)=>{
-               let alt =   imagesArray[i].getAttribute("alt");
-               //a-section a-spacing-mini _cDEzb_noop_3Xbw5 
-               let parent = imagesArray[i].parentElement;
-               let text = document.createElement("p");
-               text.style.position = "absolute"
-               text.style.top = e.clientY
-               text.style.left = e.clientX
 
-               text.textContent = alt;
-               parent.appendChild(text)
-            })
-        }
-    })    
+        imagesArray.forEach(image => {
+            image.addEventListener("mouseover", () => {
+                let alt = image.getAttribute("alt");
+                let text = document.createElement("span");
+                text.textContent = alt;
+                text.style.position = "absolute";
+                text.style.top = "1%";
+                text.style.left = "50%";
+                image.parentElement.appendChild(text);
+
+                image.addEventListener("mouseout", () => {
+                    text.remove();
+                });
+            });
+        });
+    });
+
     let button_prices = document.createElement("button");
     button_prices.textContent = "Search lowest price";
-    button_prices.id = "button_lowest prices";
-    sticky_menu.appendChild(button_images)
-    sticky_menu.appendChild(button_prices)
-    document.body.appendChild(sticky_menu)
+    button_prices.id = "button_lowest_prices";
+
+    sticky_menu.appendChild(button_images);
+    sticky_menu.appendChild(button_prices);
+    document.body.appendChild(sticky_menu);
 }
