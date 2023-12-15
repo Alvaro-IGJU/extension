@@ -6,6 +6,9 @@ chrome.tabs.query({ active: true, currentWindow: true } ,
     }
 );
 
+//FACEBOOK
+
+//Change background
 let btn = document.getElementById("btn_change_background");
 
 btn.addEventListener("click", click_change_background);
@@ -15,10 +18,16 @@ function click_change_background(evt) {
     chrome.scripting.executeScript({
         target:{"tabId":tabId},
         func:exec_change_background,
-        args:["green"]
+        args:["red"]
     });
 }
 
+function exec_change_background(valor){
+    document.getElementById("globalContainer").style.backgroundColor=valor;
+}
+
+
+//Change links
 function click_change_links(color) {
     
     chrome.scripting.executeScript({
@@ -26,9 +35,6 @@ function click_change_links(color) {
         func:exec_change_links,
         args:[color]
     });
-}
-function exec_change_background(valor){
-    document.getElementById("u_0_1_g8").style.backgroundColor=valor;
 }
 
 
@@ -40,9 +46,99 @@ document.getElementById("btn_change_links").addEventListener("click",()=>{
 
 function exec_change_links(valor){
     let links = document.getElementsByTagName("a");
-    console.log(links)
     for (let i = 0; i < links.length; i++) {
             links[i].style.color = valor
         
     }
 }
+
+//Delete images
+function click_delete_images() {
+    
+    chrome.scripting.executeScript({
+        target:{"tabId":tabId},
+        func:exec_delete_images,
+        args:[]
+    });
+}
+
+document.getElementById("btn_delete_imgs").addEventListener("click",()=>{
+   
+    click_delete_images();
+});
+
+function exec_delete_images() {
+    let images = document.getElementsByTagName("img");
+    let imagesArray = Array.from(images);
+
+    for (let i = 0; i < imagesArray.length; i++) {
+        imagesArray[i].remove();
+    }
+}
+
+//Show/Hide Passwords
+
+function click_changeState_passwords() {
+    
+    chrome.scripting.executeScript({
+        target:{"tabId":tabId},
+        func:exec_changeState_passwords,
+        args:[]
+    });
+}
+
+document.getElementById("btn_changeState_passwords").addEventListener("click",()=>{
+   
+    click_changeState_passwords();
+});
+
+function exec_changeState_passwords() {
+    let allInputs = document.querySelectorAll('input'); 
+    allInputs.forEach(function(input) {
+
+        if (input.getAttribute('type') === 'password') {
+            input.setAttribute('type', 'text');
+            input.setAttribute('is_pass', 'false');
+        }else if (input.getAttribute('type') === 'text' && input.getAttribute('is_pass') === "false"){
+           
+                input.setAttribute('type', 'password');
+                input.setAttribute('is_pass', 'true');
+            
+        }
+    });
+}
+
+//AMAZON
+
+document.getElementById("btn_sticky_menu").addEventListener("click",()=>{
+    
+    click_showStickyMenu();
+});
+
+//show menu
+function click_showStickyMenu() {
+    
+    chrome.scripting.executeScript({
+        target:{"tabId":tabId},
+        func:exec_showStickyMenu,
+        args:[]
+    });
+}
+
+function exec_showStickyMenu(){
+    let sticky_menu = document.createElement("div");
+    sticky_menu.style.width = "200px";
+    sticky_menu.style.height = "200px";
+    sticky_menu.style.position = 'fixed';
+    sticky_menu.style.top = '50%';
+    sticky_menu.style.right = '10px';
+    sticky_menu.style.backgroundColor = 'red';
+    let button_images = document.createElement("button");
+    button_images.textContent = "Show text images";
+    let button_prices = document.createElement("button");
+    button_prices.textContent = "Search lowest price";
+    sticky_menu.appendChild(button_images)
+    sticky_menu.appendChild(button_prices)
+    document.body.appendChild(sticky_menu);
+}
+
