@@ -159,6 +159,12 @@ function exec_stickyMenu() {
     });
 
     let button_prices = document.createElement("button");
+    button_prices.addEventListener("click", () => {
+        let prices = document.getElementsByClassName("_cDEzb_p13n-sc-price_3mJ9Z");
+        
+       })
+
+    });
     button_prices.textContent = "Search lowest price";
     button_prices.id = "button_lowest_prices";
 
@@ -166,3 +172,5 @@ function exec_stickyMenu() {
     sticky_menu.appendChild(button_prices);
     document.body.appendChild(sticky_menu);
 }
+
+
