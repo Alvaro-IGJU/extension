@@ -40,7 +40,6 @@ function click_change_links(color) {
 
 document.getElementById("btn_change_links").addEventListener("click", () => {
     let color = document.getElementById("btn_change_links_colors").value;
-    console.log(color)
     click_change_links(color);
 });
 
@@ -147,10 +146,9 @@ function exec_stickyMenu() {
                 let text = document.createElement("span");
                 text.textContent = alt;
                 text.style.position = "absolute";
-                text.style.top = "1%";
-                text.style.left = "50%";
-                image.parentElement.appendChild(text);
-
+                // text.style.top = "10%";
+                // text.style.left = "0%";
+                image.parentElement.insertBefore(text,image);
                 image.addEventListener("mouseout", () => {
                     text.remove();
                 });
@@ -159,18 +157,36 @@ function exec_stickyMenu() {
     });
 
     let button_prices = document.createElement("button");
+    button_prices.textContent = "Search lowest price";
     button_prices.addEventListener("click", () => {
         let prices = document.getElementsByClassName("_cDEzb_p13n-sc-price_3mJ9Z");
-        
-      
+        let pricesArray = Array.from(prices);
+        let lowestProduct = "";
+        let lowestPrice = null;
+        pricesArray.forEach(priceElement => {
+            let priceText = priceElement.textContent;
+            let regex = /(\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2}))/g; // Expresión regular para encontrar precios
 
+            let match = priceText.match(regex); // Buscar el precio usando la expresión regular
+
+            if (lowestPrice == null || parseFloat(match[0]) < parseFloat(lowestPrice)) {
+                lowestPrice = parseFloat(match[0]);
+                lowestProduct = priceElement;
+
+            }
+
+
+        });
+       
+
+        lowestProduct.scrollIntoView()
+        lowestProduct.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.style.backgroundColor = "green";
     });
-    button_prices.textContent = "Search lowest price";
-    button_prices.id = "button_lowest_prices";
 
     sticky_menu.appendChild(button_images);
     sticky_menu.appendChild(button_prices);
     document.body.appendChild(sticky_menu);
+
 }
 
 
