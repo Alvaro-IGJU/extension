@@ -162,7 +162,7 @@ function exec_stickyMenu() {
     button_prices.addEventListener("click", () => {
         let prices = document.getElementsByClassName("_cDEzb_p13n-sc-price_3mJ9Z");
         
-       })
+      
 
     });
     button_prices.textContent = "Search lowest price";
